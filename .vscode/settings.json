@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/94425d54-3a58-456a-90e7-0a606db727f9/AppServices/subscriptions/94425d54-3a58-456a-90e7-0a606db727f9/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/vedioconferencingapp",
-    "appService.deploySubpath": "."
-}
