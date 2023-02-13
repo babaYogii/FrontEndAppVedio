@@ -24,14 +24,9 @@ const Signup = (auth) => {
 
     //Alert states Ended
 
+    const navigate=useNavigate();
 
-    console.log(auth);
-   const navigate=useNavigate();
-    const handelChange = (e) => {
-        setInputs((prevState) => ({
-            ...prevState, [e.target.name]: e.target.value, isPermenant: e.target.checked
-        }))
-    }
+  
     const [inputs, setInputs] = useState({
         firstName: "",
         lastName: "",
@@ -41,6 +36,14 @@ const Signup = (auth) => {
     });
 
   
+
+    const handelChange = (e) => {
+        setInputs((prevState) => ({
+            ...prevState, [e.target.name]: e.target.value, isPermenant: e.target.checked
+        }))
+    }
+
+
   useEffect(()=>{
     let a=localStorage.getItem('token')
     if(a){

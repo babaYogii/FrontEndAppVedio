@@ -28,7 +28,7 @@ const CreateMeeting = () => {
   const [title, setTitle] = useState("User created successfully");
 
   //Alert states Ended
-  const [errors, setErrors] = useState("");
+  const [errors, setErrors] = useState({});
   const [validated, setValidated] = useState(false);
   const [inputs, setInputs] = useState({
     "meetingName": "",
@@ -120,10 +120,13 @@ const CreateMeeting = () => {
         <Typography variant='h4' component='h6' align='center' color='#00A86B'>Create Meeting</Typography>
         <TextField variant='standard' required fullWidth autoComplete="off"
           name='meetingName' onChange={handelInputs} label="Meeting Name" sx={{ marginTop: "8px", marginBottom: "2px", color: "#00A86B" }} />
+        {(errors.meetingName && (!inputs.meetingName)) && <Typography variant='caption' color='red'>{errors.meetingName}</Typography>}
 
         <TextField variant='standard' required fullWidth autoComplete="off" type='number' style={{ color: "#00A86B" }}
           name='sizeOfMeeting' onChange={handelInputs} label="Number of Participants" sx={{ marginY: "4px", marginTop: "4px", color: "#00A86B" }} />
-
+         {(errors.sizeOfMeeting && (!inputs.sizeOfMeeting  || inputs.sizeOfMeeting>15)) && 
+         <Typography variant='caption' color='red'>{errors.sizeOfMeeting}</Typography>}
+           
         <TextField variant='standard' required fullWidth autoComplete="off"  type='datetime-local' sx={{ marginY: "8px" }}
           name='scheduleDate' onChange={(e) => { setDate(e.target.value) }} />
 
