@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import ReactJsAlert from "reactjs-alert";
 import { Link, useNavigate } from 'react-router-dom';
-import signup from "../Helper/Axios/axiossignup"
+import signup from "../Helper/Axios/axiossignup";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 
@@ -13,6 +14,17 @@ import signup from "../Helper/Axios/axiossignup"
 
 
 const Signup = (auth) => {
+
+
+
+    //Alert States
+    const [status, setStatus] = useState(false);
+    const [type, setType] = useState("success");
+    const [title, setTitle] = useState("User created successfully");
+
+    //Alert states Ended
+
+
     console.log(auth);
    const navigate=useNavigate();
     const handelChange = (e) => {
@@ -32,7 +44,7 @@ const Signup = (auth) => {
   useEffect(()=>{
     let a=localStorage.getItem('token')
     if(a){
-     navigate('/createmeeting')
+     navigate('/main')
     }
  },[navigate])
  
@@ -42,6 +54,7 @@ const Signup = (auth) => {
     const [isSubmit, setisSubmit] = useState(false);
 
     useEffect(() => {
+        document.title="SIGNUP - Tech Teams "
         console.log(errors)
         if (Object.keys(errors).length === 0 && isSubmit) {
             console.log(inputs);
@@ -56,14 +69,37 @@ const Signup = (auth) => {
         setErrors(validate(inputs));
         console.log(inputs)
         let response= await signup(inputs);
-        if(response.status===201 || response.status===404){
-            alert(response.data.message);
+
+        ///Alert function
+        if(response.status===201){
+            setStatus(true);
+            setType("success");
+            setTitle("Sign Up Successful!");
             if(response.status===201){
-                navigate('/signin');
+            setTimeout(() => {
+                navigate('/signin')
+              }, 2000)
+                   setStatus(true);
+            setType("success");
+            setTitle("Sign Up Successful!");
             }
         }
+        if( response.status===400){
+            setStatus(true)
+            setType("error");
         
-        
+        }
+        if(response.status===404){
+            setTimeout(() => {
+                navigate('/signin')
+              }, 2000)
+            setStatus(true)
+            setType('warning');
+            setTitle("User already exist")
+        }
+
+
+        //Alert function Ended
        
         setisSubmit(true);
      
@@ -119,10 +155,8 @@ const Signup = (auth) => {
             <Grid mt={'6vh'} >
                 <Paper elevation={20} style={{ ...papperStyle, width: '60%' }}>
                     <Grid align="center">
-                        <Avatar sx={{ bgcolor: "#1bbd7e", width: 56, height: 56 }} >
-                            <PersonAddIcon />
-                        </Avatar>
-                        <Typography variant='h4' component='h2'>Sign Up</Typography>
+                        
+                        <Typography variant='h4' component='h2' color='primary'>Sign Up</Typography>
                         <Typography variant='caption'>Registere Here</Typography>
                     </Grid>
                     <form noValidate onSubmit={handelSubmit}>
@@ -155,17 +189,17 @@ const Signup = (auth) => {
 
 
                             <TextField variant='standard' value={inputs.confirmPassword} name="confirmPassword" onChange={handelChange}
-                                required fullWidth autoComplete="off" type='password' label="Confrim Password"></TextField>
+                                required fullWidth autoComplete="off" type='password' label="Confirm Password"></TextField>
                             {(errors.confirmPassword && (!inputs.confirmPassword || inputs.confirmPassword!==inputs.password)) && <Typography variant='caption' color='red'>{errors.confirmPassword}</Typography>}
 
 
 
-                            <Button type='submit' variant='contained' >Sign Up</Button>
+                            <Button type='submit' variant='contained' sx={{m:2}}><AddCircleOutlineIcon color='white' sx={{mr:1}}/>Sign Up</Button>
 
 
 
                             <Box display='flex' textAlign='center' flexDirection='column'>
-                                <Typography variant='body2' color='primary'>Already have account ?<Link to='/signin' style={{ textDecoration: 'none' }}>Login here</Link></Typography>
+                                <Typography variant='body2' >Already have account ? <Link to='/signin' style={{ textDecoration: 'none',color:'#00A86B' }}>Login here</Link></Typography>
                             </Box>
 
 
@@ -173,6 +207,13 @@ const Signup = (auth) => {
                     </form>
                 </Paper>
             </Grid>
+            <ReactJsAlert
+          status={status} // true or false
+          type={type} // success, warning, error, info
+          title={title}
+          quotes={false}
+          Close={() => setStatus(false)}
+        />
 
     </>
 }

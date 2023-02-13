@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar,Button, Grid, Paper, TextField, Typography} from '@mui/material';
-import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
+import { Button, Grid, Paper, TextField, Typography} from '@mui/material';
+import ReactJsAlert from "reactjs-alert";
 import { Link, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/system';
 import axiosSignin from '../Helper/Axios/axiosSignIn';
+import LoadingBar from 'react-top-loading-bar'
 
 
 const Signin = () => {
@@ -13,6 +14,16 @@ const Signin = () => {
     });
     const [errors, setErrors] = useState({});
     const [validated, setValidated] = useState(false);
+    const[progress,setProgress]=useState(0)
+
+   //Alert States
+   const [status, setStatus] = useState(false);
+   const [type, setType] = useState("success");
+   const [title, setTitle] = useState("User created successfully");
+
+   //Alert states Ended
+
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,9 +34,11 @@ const Signin = () => {
     }, [errors])
 
     useEffect(()=>{
+
+        document.title="SIGNIN - Tech Teams"
        let a=localStorage.getItem('token')
         if(a){
-            navigate('/createmeeting')
+            navigate('/main')
            }
       
        
@@ -35,25 +48,44 @@ const Signin = () => {
 
 
     const handelSubmit =async  (e) => {
+        setProgress(20)
         e.preventDefault();
         console.log(errors)
         setErrors(validate(inputs));
         setValidated(true);
+        setProgress(40)
         console.log(inputs)
         // let response=await axiosSignin(inputs)
         // console.log(response,'from main')
         // if(response.status===200){
-        //     localStorage.setItem('user',JSON.stringify(response.data.user));
-        //     localStorage.setItem('token',response.data.token);
-        //     navigate('/createmeeting');
-        // }
-        try{
-            let response=await axiosSignin(inputs);
-            localStorage.setItem('user',JSON.stringify(response.data.user));
+            //     localStorage.setItem('user',JSON.stringify(response.data.user));
+            //     localStorage.setItem('token',response.data.token);
+            //     navigate('/createmeeting');
+            // let error="";
+            // }
+            try{
+                let response=await axiosSignin(inputs);
+                localStorage.setItem('user',JSON.stringify(response.data.user));
+                setProgress(60)
+                setProgress(80)
             localStorage.setItem('token',response.data.token);
-            navigate('/createmeeting');
+            setProgress(100)
+            setTimeout(() => {
+                navigate('/main')
+              }, 2000)
+              setStatus(true);
+            setType("success");
+            setTitle("Sign In Successful!");
+
+
+
+            
         }catch(error){
         
+
+          setStatus(true);
+            setType("error");
+            setTitle("Invalid credentails");
 
         }
                
@@ -88,15 +120,20 @@ const Signin = () => {
 
 
 
-    const papperStyle = { padding: '80px 40px', width: '60%', maxWidth: '400px', margin: '10px auto', marginBottom: '20px',marginTop:"120px" }
+    const papperStyle = { padding: '40px 40px', width: '60%', maxWidth: '400px', margin: '10px auto', marginBottom: '20px',marginTop:"120px" }
     return <>
-            <Grid mt={'7vh'}>
+            <Grid >
+            <LoadingBar
+        color='#00A86B'
+        transitionTime='600'
+        height='4px'
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
                 <Paper elevation={20} style={{ ...papperStyle }}>
                     <Grid align="center" >
-                        <Avatar sx={{ bgcolor: "#1bbd7e", width: 56, height: 56 }} >
-                            <LoginRoundedIcon />
-                        </Avatar>
-                        <Typography variant='h4' component='h2'>Sign In</Typography>
+                        
+                        <Typography variant='h4' component='h2' color='primary'>Sign In</Typography>
                         <Typography variant='caption' >Login Here</Typography>
                     </Grid>
                     <form noValidate onSubmit={handelSubmit} >
@@ -111,19 +148,24 @@ const Signin = () => {
                                 label="Password" type='password'></TextField>
                             {(errors.password || (!inputs.password)) && <Typography variant='caption' color='red'>{errors.password}</Typography>}
 
-                            <Button type='submit' variant='contained'  >Sign In</Button>
+                            <Button type='submit' variant='contained' color="primary" sx={{m:2}}  >Sign In</Button>
                         </Box>
                     </form>
                     <Box display='flex' flexDirection="column" textAlign="center" gap={1} >
-                        <Typography variant='body2' mt={1} color='black'>Don't have an account ?
-                        <Link to='/signup' style={{ textDecoration: 'none',color:'#00A86B' }}>sign Up</Link>
+                        <Typography variant='body2' mt={1} color='black'>Don't have an account ?  <Link to='/signup' style={{ textDecoration: 'none',color:'#00A86B' }}>Sign Up</Link>
                         </Typography>
-                        <Typography variant='body2' mt={1} m={1} color='black'>Back to Home page
-                         <Link to='/' style={{ textDecoration: 'none',color:'#00A86B' }}>Home</Link>
+                        <Typography variant='body2' mt={1} m={1} color='black'>Back to Home page  <Link to='/' style={{ textDecoration: 'none',color:'#00A86B' }}>Home</Link>
                         </Typography>
                     </Box>
                 </Paper>
             </Grid>
+            <ReactJsAlert
+          status={status} // true or false
+          type={type} // success, warning, error, info
+          title={title}
+          quotes={false}
+          Close={() => setStatus(false)}
+        />
     </>
 }
 

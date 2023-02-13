@@ -1,0 +1,19 @@
+
+
+
+[
+    {
+        "image":"https://www.gstatic.com/meet/user_edu_safety_light_e04a2bbb449524ef7e49ea36d5f25b65.svg",
+        "heading":"Your meeting is safe",
+        "subheading":"No one can join a meeting unless invited or link shared by your participants"
+    },
+    {
+        "image":"https://www.gstatic.com/meet/user_edu_scheduling_light_b352efa017e4f8f1ffda43e847820322.svg",
+        "heading":"Plan ahead",
+        "subheading":"Click create meeting to schedule meetings in calender and send invites participants"
+    },{
+        "image":"https://www.gstatic.com/meet/user_edu_get_a_link_light_90698cd7b4ca04d3005c962a3756c42d.svg",
+        "heading":"Get a link you can share",
+        "subheading":"Click new meeting to get a link you can send to people you want to meet with"
+    }
+]

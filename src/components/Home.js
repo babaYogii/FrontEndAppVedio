@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 
 const Home = () => {
+
+  document.title="Home page - Tech Teams"
   
   const navigate=useNavigate();
 
@@ -17,7 +19,7 @@ const Home = () => {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
 
             <Typography variant="h1" component="h2" fontWeight={600} color="#00A86B" >
-              Tech Teams
+              Tech Meets
             </Typography>
             <Typography variant="h3" component='h2'>
               Safe. Secure. Free
@@ -47,17 +49,7 @@ const Home = () => {
         </Box>
       </Container>
       
-        {/* <Container sx={{display:'flex',alignItems:'center',flexDirection:"column" }}>
-        <Typography variant="h3" component='h2' width="70rem">
-            Collaborate without compromising privacy and security
-        </Typography>
-        <Box sx={{width:"75rem"}}>
-        <Typography variant="h5" component='span' >
-          Now more than ever, people need to know their virtual conversations are private and secure.
-          At TechTeams, privacy and security are never an afterthought. It's our commitment to you not only during this challenging time, but always. Here's how we're working to earn your trust every day with Tech Teams.  
-        </Typography>
-        </Box>
-        </Container> */}
+       
 
     </div>
   );

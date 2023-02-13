@@ -1,6 +1,6 @@
 import axios from 'axios';
 // 'http://localhost:2002/register'
-const url='http://localhost:8080/signin'
+const url='https://vedioconferencingtechmeets.azurewebsites.net/signin'
 
 console.log(url)
 

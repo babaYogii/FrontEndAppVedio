@@ -1,0 +1,13 @@
+.main-slide {
+    padding-top:30px;
+    text-align: center;
+}
+
+.carousel .slide-wrapper{
+    width:50%;
+    text-align: center;
+}
+
+.carousel{
+    text-align: center;
+}
