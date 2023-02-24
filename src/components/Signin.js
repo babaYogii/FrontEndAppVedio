@@ -19,7 +19,7 @@ const Signin = () => {
    //Alert States
    const [status, setStatus] = useState(false);
    const [type, setType] = useState("success");
-   const [title, setTitle] = useState("User created successfully");
+   const [title, setTitle] = useState("Someting went wrong");
 
    //Alert states Ended
 
@@ -50,19 +50,12 @@ const Signin = () => {
     const handelSubmit =async  (e) => {
         setProgress(20)
         e.preventDefault();
-        console.log(errors)
+        // console.log(errors)
         setErrors(validate(inputs));
         setValidated(true);
         setProgress(40)
-        console.log(inputs)
-        // let response=await axiosSignin(inputs)
-        // console.log(response,'from main')
-        // if(response.status===200){
-            //     localStorage.setItem('user',JSON.stringify(response.data.user));
-            //     localStorage.setItem('token',response.data.token);
-            //     navigate('/createmeeting');
-            // let error="";
-            // }
+        // console.log(inputs)
+        
             try{
                 let response=await axiosSignin(inputs);
                 localStorage.setItem('user',JSON.stringify(response.data.user));
@@ -75,17 +68,17 @@ const Signin = () => {
               }, 2000)
               setStatus(true);
             setType("success");
-            setTitle("Sign In Successful!");
-
-
-
-            
-        }catch(error){
-        
-
+            setTitle("Sign In Successful!");           
+        }catch(error){ 
+            console.log(error)      
           setStatus(true);
             setType("error");
-            setTitle("Invalid credentails");
+            if(error.response.data.message){
+
+                setTitle(error.response.data.message);
+            }else{
+                setTitle(error.response.data.error)
+            }
 
         }
                
@@ -96,7 +89,7 @@ const Signin = () => {
     const validate = (values) => {
         const req = {}
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,10}$/;
+        var regularExpression = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,12}$/;
         if (!values.email) {
             req.email = "Please enter the email"
         } else if (!regex.test(values.email)) {
@@ -134,7 +127,7 @@ const Signin = () => {
                     <Grid align="center" >
                         
                         <Typography variant='h4' component='h2' color='primary'>Sign In</Typography>
-                        <Typography variant='caption' >Login Here</Typography>
+                        {/* <Typography variant='caption' >Login Here</Typography> */}
                     </Grid>
                     <form noValidate onSubmit={handelSubmit} >
                         <Box display='flex' gap={1} flexDirection="column">
@@ -153,8 +146,6 @@ const Signin = () => {
                     </form>
                     <Box display='flex' flexDirection="column" textAlign="center" gap={1} >
                         <Typography variant='body2' mt={1} color='black'>Don't have an account ?  <Link to='/signup' style={{ textDecoration: 'none',color:'#00A86B' }}>Sign Up</Link>
-                        </Typography>
-                        <Typography variant='body2' mt={1} m={1} color='black'>Back to Home page  <Link to='/' style={{ textDecoration: 'none',color:'#00A86B' }}>Home</Link>
                         </Typography>
                     </Box>
                 </Paper>

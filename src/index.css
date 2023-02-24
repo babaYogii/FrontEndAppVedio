@@ -20,13 +20,41 @@ code {
     monospace;
 }
 
-.paperclass{
-    display: flex;
-    justify-content: center;
-    align-items: right;
-    text-align: "center";
-    vertical-align: "middle";
-    box-shadow: "4px 4px 4px rgba(0, 0, 0, 0.25)";
-    border-radius: "25px"
-  
+.join-btn{
+  border-radius: 5px;
+  background-color: #00A86B;
+  color:white;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 50px;
+  margin-top: 10px;
+}
+
+.join-btn:hover{
+  background-color: #285430;
+}
+
+.error-img{
+  width: 700px;
+  height: 400px;
+}
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.main-slide {
+  padding-top:30px;
+  text-align: center;
+}
+
+.carousel .slide-wrapper{
+  width:50%;
+  text-align: center;
+}
+
+.carousel{
+  text-align: center;
 }

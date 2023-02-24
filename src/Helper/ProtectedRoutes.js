@@ -9,7 +9,7 @@ const ProtectedRoutes = () => {
   localStorage.getItem('token')
 
   return (
-    localStorage.getItem('token') ? <Outlet/>:<Navigate to="/signin" />  
+    localStorage.getItem('token') ? <Outlet/>:<Navigate to="/signup" />  
   )
 }
 

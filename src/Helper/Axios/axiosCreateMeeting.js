@@ -1,24 +1,22 @@
 import axios from 'axios';
-const url='https://vedioconferencingtechmeets.azurewebsites.net'
-
+// const url='https://techmeets-app.azurewebsites.net'
+const url='http://localhost:8080'
 
 console.log(url)
-let token=localStorage.getItem('token');
 
 export const axiosCreateMeeting=async(meetingName)=>{  
     
-    console.log(meetingName.scheduleDate)
+    // console.log(meetingName.imp)
+    let payload={emails:meetingName.emails};
+    console.log(meetingName.meetingDescription)
     console.log(url+'/createMeeting')
     let user=localStorage.getItem('user');
     user=JSON.parse(user);
     
-    try{
-        console.log(token);
-        let response=await axios.post(url+"/createmeeting",{user,...meetingName},{ headers: {"Authorization" : `Bearer ${token}`}})
+        let token=localStorage.getItem('token');
+        let response= await axios.post(url+"/createmeeting",{user,...meetingName,payload,"imp":meetingName.imp},{ headers: {"Authorization" : `Bearer ${token}`}})
         return response;
-    }catch(error){
-    console.log(error);
-    }
+    
     
     
 }
@@ -43,6 +41,7 @@ export const Signup=async({firstName,lastName,email,password,contactNumber})=>{
 
 
 export const getMeetings=async()=>{
+    let token=localStorage.getItem('token');
     let response=await axios.get(url+"/getMeetings",{ headers: {"Authorization" : `Bearer ${token}`}})
     return response;
 
@@ -51,15 +50,23 @@ export const getMeetings=async()=>{
 
 export const isUrlValid=async (meetingUrl)=>{
     console.log(meetingUrl)
+    // https://techmeetsapp.azurewebsites.net/room/cdf77f70-03d0-4238-8a66-24a344c51cd3
   try{
+    
     let response = await axios.post(url+'/joinRoom',{meetingUrl});
     if(response.status===200){
+    //    console.log(response)
         return response;
     }
     
   }
   catch(error){
+    // alert("invalid url")
+    window.open('http://localhost:3000/invalidurl',"_self")
+    console.log(error)
         return error;
   }
 }
+
+
 

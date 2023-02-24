@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import logo from "../assets/logo.svg"
+import logo from "../assets/finallogo.jpeg"
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -90,7 +90,7 @@ const settings = ['profile','CreateMeeting','MyMeetings',"Logout"];
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component="nav" elevation={0} style={{ background:'#FFF'}}>
+      <AppBar component="nav" elevation={0} style={{ background:"transparent"}}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -105,8 +105,12 @@ const settings = ['profile','CreateMeeting','MyMeetings',"Logout"];
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            <img src={logo} alt='Loading' style={{height:"3rem",borderRadius:"50%"}} />
-          <Typography variant='body1' color='primary'>Tech Meets</Typography>
+            <Button onClick={()=>{Navigate('/main')}} style={{borderRadius:"50%"}} >
+
+            <img src={logo} alt='Loading'  style={{height:"5rem",borderRadius:"50%"}} />
+            </Button>
+             
+          {/* <Typography variant='body1' color='primary'>Tech Meets</Typography> */}
           </Typography>
           <Box gap={5} sx={{ display: { xs: 'none', sm: 'block',md:'flex',alignItems:'center'} }}>
             <Typography variant='h6' color="#838383" sx={{zIndex:1000}}>{ndate} * {day}-{month}-{year}</Typography>

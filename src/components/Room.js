@@ -5,6 +5,8 @@ import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
 
 
 
+let user=localStorage.get('user')
+user=json.parse();
 
 
 
@@ -12,15 +14,16 @@ const Room = (inputs) => {
 
 
   const {meetingUrl } = useParams();
+  console.log(meetingUrl)
 
   const meeting = async (element) => {
-    const appID = 946219318;
-    const serverSecret = "8e0b853d79deae0bcbfe949b73ca46a4";
+    const appID = 908783553;
+    const serverSecret = "61f0624ab42754d3d9d266337bf36a9e";
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
       meetingUrl,
-      Date.now().toString(),
+      user.firstName,
       "andrei"
     );
     
@@ -30,7 +33,7 @@ const Room = (inputs) => {
       container: element,
       sharedLinks:[{
          name:'meetingUrl',
-         url:`http://localhost:3000/room/${meetingUrl}`
+         url:`${meetingUrl}`
       }],
       scenario: {
         mode: ZegoUIKitPrebuilt.GroupCall,

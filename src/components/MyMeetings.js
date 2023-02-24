@@ -7,7 +7,6 @@ import ContentCopyTwoToneIcon from '@mui/icons-material/ContentCopyTwoTone';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { deleteMeeting } from '../Helper/Axios/axiosMeeting';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ErrorComponent from '../components/ErrorComponent'
 import ReactJsAlert from "reactjs-alert";
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +29,7 @@ const MyMeetings = () => {
     //Alert States
     const [status, setStatus] = useState(false);
     const [type, setType] = useState("success");
-    const [title, setTitle] = useState("User created successfully");
+    const [title, setTitle] = useState("");
 
     //Alert states Ended
 
@@ -41,7 +40,6 @@ const MyMeetings = () => {
         setProgress(50)
         let result = await getMeetings();
       
-        console.log(result.data)
         
         setProgress(70)
         setMeetings(result.data);
@@ -66,13 +64,12 @@ const MyMeetings = () => {
                 setType("error");
                 setTitle("Meeting deleted!");
             },3000)
-
-            
         }
+        getdata();
 
     }
 
-
+// console.log(meetings[0].scheduleDate);
 
 
 
@@ -108,13 +105,15 @@ const MyMeetings = () => {
                                             title={` ${(elem.meetingName).toUpperCase()}`}
                                             subheader={`Schedule Date : ${new Date(parseInt(elem.scheduleDate))}`}
                                         />
-                                        <DeleteIcon   onClick={() => { deleteMeetings(elem._id) }} sx={{ mr: 7, mb: 5 }} color='#fff' />
+                                        <DeleteIcon  cursor="pointer" ripple onClick={() => { deleteMeetings(elem._id) }} sx={{ mr: 7, mb: 5 }} color='#fff' />
                                     </Typography>
                                         <Typography  variant="body1" color="#808080" sx={{ pl: 2, mb: 1 }} >{`Meeting Size: ${elem.sizeOfMeeting}`}</Typography>
+                                        <Typography  variant="body1" color="#808080" sx={{ pl: 2, mb: 1 }} >{`Important : ${elem.imp ? "Yes":"No"}`}</Typography>
                                     <Typography color="#808080" variant="subtitle1" style={{ paddingLeft: 17 }}>{`Meeting URL: ${elem.meetingUrl}`} <CopyToClipboard text={`${elem.meetingUrl}`}>
                                         <Button ><ContentCopyTwoToneIcon color="#808080"></ContentCopyTwoToneIcon></Button>
                                     </CopyToClipboard>
                                     </Typography>
+                                   
                                 <Button color="primary" sx={{ml:2,mt:1}} size="small" variant="contained" onClick={() => { navigate('/joinnow') }}>
                                      <VideocamIcon color='white' sx={{ mr: 1 }}></VideocamIcon> Join Now</Button>
                                 </Typography>
@@ -123,15 +122,19 @@ const MyMeetings = () => {
                     </Grid>
                 ))}
                 <ReactJsAlert
-                    status={status} // true or false
-                    type={type} // success, warning, error, info
+                    status={status} 
+                    type={type} 
                     title={title}
                     quotes={false}
                     Close={() => setStatus(false)}
                 />
             </Grid>
                 :
-                <ErrorComponent />
+                <>
+                <Typography variant='h3' component='h1' sx={{marginTop:15}}>Create your first Meeting</Typography>
+                <Button onClick={()=>{navigate('/createmeeting')}}>Create meeting</Button>
+                </>
+
             }
         </Container>
 

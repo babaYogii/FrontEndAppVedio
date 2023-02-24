@@ -1,7 +1,9 @@
 
 
 import axios from 'axios';
-const url='https://vedioconferencingtechmeets.azurewebsites.net'
+// const url='https://techmeets-app.azurewebsites.net'
+const url='http://localhost:8080'
+
 
 
 

@@ -41,17 +41,17 @@ function App() {
           <Route element={<ProctetedRoutes />}>
             <Route element={<Profile/>} exact path="/profile" />
             <Route element={<CreateMeeting />} exact path="/createmeeting" />
-            <Route element={<Main />} exact path="/main" />
             <Route element={<MyMeetings />} exact path="/MyMeetings" />
             <Route element={<Logout/>} exact path="/logout"/>
             <Route element={<JoinRoom  />} exact path="/joinnow" />
+            <Route element={<Main />} exact path="/main" />
           </Route>
 
             <Route element={<Home  />} exact path="/" />
             <Route element={<SafeGaurd />} path="/room/:meetingUrl"/>
             <Route element={<Signup  />} exact path="/signup" /> 
             <Route element={<Signin  />} exact path="/signin" />
-            <Route element={<ErrorComponent  />} exact path="*" />
+            <Route element={<ErrorComponent  />}  path="*" />
            
         </Routes>
         </ThemeProvider>

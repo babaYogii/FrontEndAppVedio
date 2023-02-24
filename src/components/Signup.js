@@ -20,7 +20,7 @@ const Signup = (auth) => {
     //Alert States
     const [status, setStatus] = useState(false);
     const [type, setType] = useState("success");
-    const [title, setTitle] = useState("User created successfully");
+    const [title, setTitle] = useState("Something went wrong");
 
     //Alert states Ended
 
@@ -32,7 +32,7 @@ const Signup = (auth) => {
         lastName: "",
         email: "",
         password: "",
-        contactNumber: "",
+        confirmPassword: "",
     });
 
   
@@ -58,7 +58,7 @@ const Signup = (auth) => {
 
     useEffect(() => {
         document.title="SIGNUP - Tech Teams "
-        console.log(errors)
+       
         if (Object.keys(errors).length === 0 && isSubmit) {
             console.log(inputs);
         }
@@ -70,35 +70,55 @@ const Signup = (auth) => {
     const handelSubmit =async  (e) => {
         e.preventDefault();
         setErrors(validate(inputs));
-        console.log(inputs)
-        let response= await signup(inputs);
-
-        ///Alert function
-        if(response.status===201){
-            setStatus(true);
-            setType("success");
-            setTitle("Sign Up Successful!");
-            if(response.status===201){
-            setTimeout(() => {
-                navigate('/signin')
-              }, 2000)
-                   setStatus(true);
-            setType("success");
-            setTitle("Sign Up Successful!");
-            }
-        }
-        if( response.status===400){
-            setStatus(true)
-            setType("error");
+        // console.log(inputs)
         
-        }
-        if(response.status===404){
-            setTimeout(() => {
+        ///Alert function
+        try{
+            
+            let response= await signup(inputs);
+            
+            console.log(response)
+
+            if(response.status===201){
+                setStatus(true);
+                setType("success");
+                setTitle("Sign Up Successful!");
+                if(response.status===201){
+                setTimeout(() => {
+                    navigate('/signin')
+                  }, 2000)
+                       setStatus(true);
+                setType("success");
+                setTitle("Sign Up Successful!");
+                }
+                setInputs({firstName: "",
+                lastName: "",
+                email: "",
+                password: "",
+                contactNumber: "",confirmPassword:""})
+            }
+            if( response.status===400){
+                setStatus(true)
+                setType("error");
+                setTitle(response)
+            
+            }
+            if(response.status===404){
                 navigate('/signin')
-              }, 2000)
-            setStatus(true)
-            setType('warning');
-            setTitle("User already exist")
+                setStatus(true)
+                setType('error');
+                setTitle("User already exist")
+            }
+        }catch(error){
+               console.log(error)
+            setStatus(true);
+            setType("error");
+            if(error.response.data.message){
+                setTitle(error.response.data.message);
+            }else{
+                setTitle(error.response.data.error);
+            }
+
         }
 
 
@@ -106,11 +126,7 @@ const Signup = (auth) => {
        
         setisSubmit(true);
      
-        setInputs({firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        contactNumber: "",confirmPassword:""})
+      
         
     }
 
@@ -140,11 +156,7 @@ const Signup = (auth) => {
         if (values.password !== values.confirmPassword) {
             notFill.confirmPassword = "Password and confirm password does not match"
         }
-        if (!values.contactNumber) {
-            notFill.contactNumber = "Please enter contact number"
-        } else if (values.contactNumber.length < 10 || values.contactNumber.length > 10) {
-            notFill.contactNumber = "Not a valid mobile number"
-        }
+       
         return notFill;
     }
 
@@ -160,7 +172,7 @@ const Signup = (auth) => {
                     <Grid align="center">
                         
                         <Typography variant='h4' component='h2' color='primary'>Sign Up</Typography>
-                        <Typography variant='caption'>Registere Here</Typography>
+                        {/* <Typography variant='caption'>Registere Here</Typography> */}
                     </Grid>
                     <form noValidate onSubmit={handelSubmit}>
                         <Box display='flex' gap={0.7} flexDirection='column'  >
@@ -181,10 +193,7 @@ const Signup = (auth) => {
 
 
 
-                            <TextField variant='standard' value={inputs.contactNumber} name="contactNumber" onChange={handelChange}
-                                type='number' required fullWidth autoComplete="off" label="Contact number"></TextField>
-                            {(errors.contactNumber && (!inputs.contactNumber || inputs.contactNumber.length < 10 || inputs.contactNumber.length > 10)) && <Typography variant='caption' color='red'>{errors.contactNumber}</Typography>}
-
+                            
                             <TextField variant='standard' value={inputs.password} name="password" onChange={handelChange}
                                 required fullWidth autoComplete="off" type='password' label="Password"></TextField>
                             {/* {errors.password  && <Typography variant='caption' color='red'> {errors.password}</Typography>} */}

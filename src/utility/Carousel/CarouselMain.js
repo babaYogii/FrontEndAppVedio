@@ -10,7 +10,7 @@ function CarouselMain(props)
     
 
     return (
-        <Carousel  NextIcon={<NavigateNextIcon/>}
+        <Carousel  NextIcon={<NavigateNextIcon/> }
                 PrevIcon={<NavigateBeforeIcon/>} >
             {
                 data.map( (item, i) => <Item key={i} item={item} /> )

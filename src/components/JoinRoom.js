@@ -3,6 +3,7 @@ import { Box, TextField, Container, Button, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { isUrlValid } from '../Helper/Axios/axiosCreateMeeting'
 import ReactJsAlert from "reactjs-alert";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
 // const useStyles = makeStyles({
@@ -74,16 +75,18 @@ const JoinRoom = () => {
 
     const handelSubmit = async (e) => {
         e.preventDefault();
+        console.log(inputs.meetingUrl)
         if (!error) {
             try {
                 let response = await isUrlValid(inputs.meetingUrl);
                 if (response.status === 200) {
                     setValidurl(true);
-                    const url = `http://${inputs.meetingUrl}`
+                    const url = `${inputs.meetingUrl}`
                     window.open(url, "_blank");
                 }
             } catch (err) {
                 // alert(error.);
+                console.log(err)
                 status(true)
                setType('error');
                setTitle("Invalid url")
@@ -118,16 +121,13 @@ const JoinRoom = () => {
 
                     !checkvalidurl
                         ?
-                        <Button variant="contained" onClick={handelSubmit} sx={{
-                            border: "2px solid #00A86B", color: "#fff", background: '#00A86B', m: 2,
-                            "&:hover": { backgroundColor: "white", color: "#00A86B", border: "2px solid #00A86B" }
-                        }}>
-                            Validate Url </Button> :
+                        <Button variant="contained" onClick={handelSubmit} sx={{marginY:"6px",backgroundColor:"#00A86B",border:"2px solid #00A86B",'&:hover': {background: 'none', color:"#00A86B", border:"2px solid #00A86B"}, mb:5, mt:2}}>
+           <CheckCircleOutlineIcon color="white" sx={{mr:1 }}> </CheckCircleOutlineIcon> Validate Url </Button>  :
 
                         //    <Link href={url} color="inherit" >
                         //    Join Now
                         //  </Link>
-                        <a href={`http://${inputs.meetingUrl}`} target="_blank" rel="noreferrer"> join now</a>
+                        <a href={`${inputs.meetingUrl}`} target="_blank" rel="noreferrer"> join now</a>
 
                 }
                 <ReactJsAlert

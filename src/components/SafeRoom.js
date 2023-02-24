@@ -29,7 +29,7 @@ const Room = (inputs) => {
       serverSecret,
       meetingUrl,
       Date.now().toString(),
-      "andrei"
+      "Your name"
     );
     
     const zp = ZegoUIKitPrebuilt.create(kitToken);

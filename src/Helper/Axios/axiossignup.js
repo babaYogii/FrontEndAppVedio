@@ -1,20 +1,18 @@
 import axios from 'axios';
 
-// 'http://localhost:2002/register'
-const url='https://vedioconferencingtechmeets.azurewebsites.net/signup'
+const url='http://localhost:8080/signup'
+// const url='https://techmeets-app.azurewebsites.net/signup'
 
 console.log(url)
 
-const Signup=async({firstName,lastName,email,password,contactNumber})=>{    
+const Signup=async({firstName,lastName,email,password,confirmPassword})=>{    
 
-    try{
-    console.log(firstName,lastName,email,password,contactNumber)
-    let response=await axios.post(url,{firstName,lastName,email,password,contactNumber})
+    
+    console.log(firstName,lastName,email,password,confirmPassword)
+    let response=await axios.post(url,{firstName,lastName,email,password,confirmPassword})
         
         return response; 
-    }catch(error){
-        return error;
-    }
+    
 }
 
 
